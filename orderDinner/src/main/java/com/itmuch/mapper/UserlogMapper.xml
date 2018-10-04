@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itmuch.mapper.UserlogMapper">
+  <resultMap id="BaseResultMap" type="com.itmuch.pojo.Userlog">
+    <id column="recordId" jdbcType="VARCHAR" property="recordid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="ipAddress" jdbcType="VARCHAR" property="ipaddress" />
+    <result column="inParam" jdbcType="VARCHAR" property="inparam" />
+    <result column="outParam" jdbcType="VARCHAR" property="outparam" />
+    <result column="cTime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="cUser" jdbcType="VARCHAR" property="cuser" />
+    <result column="uTime" jdbcType="TIMESTAMP" property="utime" />
+    <result column="uUser" jdbcType="VARCHAR" property="uuser" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itmuch.pojo.Userlog">
+    <result column="operation" jdbcType="LONGVARCHAR" property="operation" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    recordId, userId, ipAddress, inParam, outParam, cTime, cUser, uTime, uUser
+  </sql>
+  <sql id="Blob_Column_List">
+    operation
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.itmuch.pojo.UserlogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.itmuch.pojo.UserlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userlog
+    where recordId = #{recordid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from userlog
+    where recordId = #{recordid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itmuch.pojo.UserlogExample">
+    delete from userlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itmuch.pojo.Userlog">
+    insert into userlog (recordId, userId, ipAddress, 
+      inParam, outParam, cTime, 
+      cUser, uTime, uUser, 
+      operation)
+    values (#{recordid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{ipaddress,jdbcType=VARCHAR}, 
+      #{inparam,jdbcType=VARCHAR}, #{outparam,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{cuser,jdbcType=VARCHAR}, #{utime,jdbcType=TIMESTAMP}, #{uuser,jdbcType=VARCHAR}, 
+      #{operation,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itmuch.pojo.Userlog">
+    insert into userlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordid != null">
+        recordId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="ipaddress != null">
+        ipAddress,
+      </if>
+      <if test="inparam != null">
+        inParam,
+      </if>
+      <if test="outparam != null">
+        outParam,
+      </if>
+      <if test="ctime != null">
+        cTime,
+      </if>
+      <if test="cuser != null">
+        cUser,
+      </if>
+      <if test="utime != null">
+        uTime,
+      </if>
+      <if test="uuser != null">
+        uUser,
+      </if>
+      <if test="operation != null">
+        operation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordid != null">
+        #{recordid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null">
+        #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="inparam != null">
+        #{inparam,jdbcType=VARCHAR},
+      </if>
+      <if test="outparam != null">
+        #{outparam,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cuser != null">
+        #{cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="utime != null">
+        #{utime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuser != null">
+        #{uuser,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null">
+        #{operation,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itmuch.pojo.UserlogExample" resultType="java.lang.Long">
+    select count(*) from userlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update userlog
+    <set>
+      <if test="record.recordid != null">
+        recordId = #{record.recordid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipaddress != null">
+        ipAddress = #{record.ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inparam != null">
+        inParam = #{record.inparam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outparam != null">
+        outParam = #{record.outparam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        cTime = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cuser != null">
+        cUser = #{record.cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utime != null">
+        uTime = #{record.utime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uuser != null">
+        uUser = #{record.uuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operation != null">
+        operation = #{record.operation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update userlog
+    set recordId = #{record.recordid,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=VARCHAR},
+      ipAddress = #{record.ipaddress,jdbcType=VARCHAR},
+      inParam = #{record.inparam,jdbcType=VARCHAR},
+      outParam = #{record.outparam,jdbcType=VARCHAR},
+      cTime = #{record.ctime,jdbcType=TIMESTAMP},
+      cUser = #{record.cuser,jdbcType=VARCHAR},
+      uTime = #{record.utime,jdbcType=TIMESTAMP},
+      uUser = #{record.uuser,jdbcType=VARCHAR},
+      operation = #{record.operation,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update userlog
+    set recordId = #{record.recordid,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=VARCHAR},
+      ipAddress = #{record.ipaddress,jdbcType=VARCHAR},
+      inParam = #{record.inparam,jdbcType=VARCHAR},
+      outParam = #{record.outparam,jdbcType=VARCHAR},
+      cTime = #{record.ctime,jdbcType=TIMESTAMP},
+      cUser = #{record.cuser,jdbcType=VARCHAR},
+      uTime = #{record.utime,jdbcType=TIMESTAMP},
+      uUser = #{record.uuser,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itmuch.pojo.Userlog">
+    update userlog
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null">
+        ipAddress = #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="inparam != null">
+        inParam = #{inparam,jdbcType=VARCHAR},
+      </if>
+      <if test="outparam != null">
+        outParam = #{outparam,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        cTime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cuser != null">
+        cUser = #{cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="utime != null">
+        uTime = #{utime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuser != null">
+        uUser = #{uuser,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null">
+        operation = #{operation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where recordId = #{recordid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itmuch.pojo.Userlog">
+    update userlog
+    set userId = #{userid,jdbcType=VARCHAR},
+      ipAddress = #{ipaddress,jdbcType=VARCHAR},
+      inParam = #{inparam,jdbcType=VARCHAR},
+      outParam = #{outparam,jdbcType=VARCHAR},
+      cTime = #{ctime,jdbcType=TIMESTAMP},
+      cUser = #{cuser,jdbcType=VARCHAR},
+      uTime = #{utime,jdbcType=TIMESTAMP},
+      uUser = #{uuser,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=LONGVARCHAR}
+    where recordId = #{recordid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itmuch.pojo.Userlog">
+    update userlog
+    set userId = #{userid,jdbcType=VARCHAR},
+      ipAddress = #{ipaddress,jdbcType=VARCHAR},
+      inParam = #{inparam,jdbcType=VARCHAR},
+      outParam = #{outparam,jdbcType=VARCHAR},
+      cTime = #{ctime,jdbcType=TIMESTAMP},
+      cUser = #{cuser,jdbcType=VARCHAR},
+      uTime = #{utime,jdbcType=TIMESTAMP},
+      uUser = #{uuser,jdbcType=VARCHAR}
+    where recordId = #{recordid,jdbcType=VARCHAR}
+  </update>
+</mapper>

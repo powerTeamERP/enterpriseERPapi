@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itmuch.mapper.OrderdinneropinionMapper">
+  <resultMap id="BaseResultMap" type="com.itmuch.pojo.Orderdinneropinion">
+    <id column="opinionId" jdbcType="VARCHAR" property="opinionid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="cTime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="cUser" jdbcType="VARCHAR" property="cuser" />
+    <result column="uTime" jdbcType="TIMESTAMP" property="utime" />
+    <result column="uUser" jdbcType="VARCHAR" property="uuser" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itmuch.pojo.Orderdinneropinion">
+    <result column="opinionContent" jdbcType="LONGVARCHAR" property="opinioncontent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    opinionId, userId, cTime, cUser, uTime, uUser
+  </sql>
+  <sql id="Blob_Column_List">
+    opinionContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.itmuch.pojo.OrderdinneropinionExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from orderdinneropinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.itmuch.pojo.OrderdinneropinionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderdinneropinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from orderdinneropinion
+    where opinionId = #{opinionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from orderdinneropinion
+    where opinionId = #{opinionid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itmuch.pojo.OrderdinneropinionExample">
+    delete from orderdinneropinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itmuch.pojo.Orderdinneropinion">
+    insert into orderdinneropinion (opinionId, userId, cTime, 
+      cUser, uTime, uUser, 
+      opinionContent)
+    values (#{opinionid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{cuser,jdbcType=VARCHAR}, #{utime,jdbcType=TIMESTAMP}, #{uuser,jdbcType=VARCHAR}, 
+      #{opinioncontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itmuch.pojo.Orderdinneropinion">
+    insert into orderdinneropinion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="opinionid != null">
+        opinionId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="ctime != null">
+        cTime,
+      </if>
+      <if test="cuser != null">
+        cUser,
+      </if>
+      <if test="utime != null">
+        uTime,
+      </if>
+      <if test="uuser != null">
+        uUser,
+      </if>
+      <if test="opinioncontent != null">
+        opinionContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="opinionid != null">
+        #{opinionid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cuser != null">
+        #{cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="utime != null">
+        #{utime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuser != null">
+        #{uuser,jdbcType=VARCHAR},
+      </if>
+      <if test="opinioncontent != null">
+        #{opinioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itmuch.pojo.OrderdinneropinionExample" resultType="java.lang.Long">
+    select count(*) from orderdinneropinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update orderdinneropinion
+    <set>
+      <if test="record.opinionid != null">
+        opinionId = #{record.opinionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        cTime = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cuser != null">
+        cUser = #{record.cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utime != null">
+        uTime = #{record.utime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uuser != null">
+        uUser = #{record.uuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opinioncontent != null">
+        opinionContent = #{record.opinioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update orderdinneropinion
+    set opinionId = #{record.opinionid,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=VARCHAR},
+      cTime = #{record.ctime,jdbcType=TIMESTAMP},
+      cUser = #{record.cuser,jdbcType=VARCHAR},
+      uTime = #{record.utime,jdbcType=TIMESTAMP},
+      uUser = #{record.uuser,jdbcType=VARCHAR},
+      opinionContent = #{record.opinioncontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update orderdinneropinion
+    set opinionId = #{record.opinionid,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=VARCHAR},
+      cTime = #{record.ctime,jdbcType=TIMESTAMP},
+      cUser = #{record.cuser,jdbcType=VARCHAR},
+      uTime = #{record.utime,jdbcType=TIMESTAMP},
+      uUser = #{record.uuser,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itmuch.pojo.Orderdinneropinion">
+    update orderdinneropinion
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        cTime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cuser != null">
+        cUser = #{cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="utime != null">
+        uTime = #{utime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuser != null">
+        uUser = #{uuser,jdbcType=VARCHAR},
+      </if>
+      <if test="opinioncontent != null">
+        opinionContent = #{opinioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where opinionId = #{opinionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itmuch.pojo.Orderdinneropinion">
+    update orderdinneropinion
+    set userId = #{userid,jdbcType=VARCHAR},
+      cTime = #{ctime,jdbcType=TIMESTAMP},
+      cUser = #{cuser,jdbcType=VARCHAR},
+      uTime = #{utime,jdbcType=TIMESTAMP},
+      uUser = #{uuser,jdbcType=VARCHAR},
+      opinionContent = #{opinioncontent,jdbcType=LONGVARCHAR}
+    where opinionId = #{opinionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itmuch.pojo.Orderdinneropinion">
+    update orderdinneropinion
+    set userId = #{userid,jdbcType=VARCHAR},
+      cTime = #{ctime,jdbcType=TIMESTAMP},
+      cUser = #{cuser,jdbcType=VARCHAR},
+      uTime = #{utime,jdbcType=TIMESTAMP},
+      uUser = #{uuser,jdbcType=VARCHAR}
+    where opinionId = #{opinionid,jdbcType=VARCHAR}
+  </update>
+</mapper>
